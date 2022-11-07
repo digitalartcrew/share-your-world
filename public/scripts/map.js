@@ -37,13 +37,24 @@ function initMap() {
       this.div.style.position = "absolute";
 
       // Create the img element and attach it to the div.
-      const img = document.createElement("img");
+      //   const img = document.createElement("img");
 
-      img.src = this.image;
-      img.style.width = "100%";
-      img.style.height = "100%";
-      img.style.position = "absolute";
-      this.div.appendChild(img);
+      //   img.src = this.image;
+      //   img.style.width = "100%";
+      //   img.style.height = "100%";
+      //   img.style.position = "absolute";
+      //   this.div.appendChild(img);
+
+      const canvas = document.createElement("canvas");
+
+      canvas.style.width = 300;
+      canvas.style.height = 300;
+      canvas.style.position = "absolute";
+
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "green";
+      ctx.fillRect(10, 10, 100, 100);
+      this.div.appendChild(canvas);
 
       // Add the element to the "overlayLayer" pane.
       const panes = this.getPanes();
