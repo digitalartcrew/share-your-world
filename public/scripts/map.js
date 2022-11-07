@@ -9,22 +9,13 @@ function initMap() {
     new google.maps.LatLng(62.281819, -150.287132),
     new google.maps.LatLng(62.400471, -150.005608)
   );
-  // The photograph is courtesy of the U.S. Geological Survey.
-  let image = "https://developers.google.com/maps/documentation/javascript/";
 
-  image += "examples/full/images/talkeetna.png";
-  /**
-   * The custom USGSOverlay object contains the USGS image,
-   * the bounds of the image, and a reference to the map.
-   */
-  class USGSOverlay extends google.maps.OverlayView {
+  class UserMapOverlay extends google.maps.OverlayView {
     bounds;
-    image;
     div;
-    constructor(bounds, image) {
+    constructor(bounds) {
       super();
       this.bounds = bounds;
-      this.image = image;
     }
     /**
      * onAdd is called when the map's panes are ready and the overlay has been
@@ -35,15 +26,6 @@ function initMap() {
       this.div.style.borderStyle = "none";
       this.div.style.borderWidth = "0px";
       this.div.style.position = "absolute";
-
-      // Create the img element and attach it to the div.
-      //   const img = document.createElement("img");
-
-      //   img.src = this.image;
-      //   img.style.width = "100%";
-      //   img.style.height = "100%";
-      //   img.style.position = "absolute";
-      //   this.div.appendChild(img);
 
       const canvas = document.createElement("canvas");
 
@@ -125,7 +107,7 @@ function initMap() {
     }
   }
 
-  const overlay = new USGSOverlay(bounds, image);
+  const overlay = new UserMapOverlay(bounds);
 
   overlay.setMap(map);
 
