@@ -27,6 +27,7 @@ function initMap() {
       this.div.style.borderWidth = "0px";
       this.div.style.position = "absolute";
 
+      // NOTE: starting point for canvas - needs to be an almost transparent layer that a user can draw on.
       const canvas = document.createElement("canvas");
 
       canvas.style.width = 300;
