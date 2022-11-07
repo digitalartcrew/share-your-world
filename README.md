@@ -1,6 +1,3 @@
-## Vacation Destinations
+# Google Maps Hackathon - Custom Overlay
 
-CRUD application built using NodeJS, React, MongoDB and Express
-
-Link to project: https://vacation-destinations-db.herokuapp.com/
-# google-maps-hackathon-overlay
+The purpose of this project is for a user to be able to annotate on an overlay which sits on top of Google Maps and share a personalized experience with another user.
