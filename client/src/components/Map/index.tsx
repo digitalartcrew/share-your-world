@@ -1,20 +1,94 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  MarkerClusterer,
+  MarkerF
+} from "@react-google-maps/api";
 
-export const Map = ({
-  center,
-  zoom,
-}: {
-  center: google.maps.LatLngLiteral;
-  zoom: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
+const containerStyle = {
+  width: "100%",
+  height: "100vh"
+};
 
-  // useEffect(() => {
-  //   new window.google.maps.Map(ref.current, {
-  //     center,
-  //     zoom,
-  //   });
-  // });
+const center = { lat: -28.024, lng: 140.887 };
 
-  return <div ref={ref} id="map"></div>;
+const locations = [
+  { lat: -31.56391, lng: 147.154312 },
+  { lat: -33.718234, lng: 150.363181 },
+  { lat: -33.727111, lng: 150.371124 },
+  { lat: -33.848588, lng: 151.209834 },
+  { lat: -33.851702, lng: 151.216968 },
+  { lat: -34.671264, lng: 150.863657 },
+  { lat: -35.304724, lng: 148.662905 },
+  { lat: -36.817685, lng: 175.699196 },
+  { lat: -36.828611, lng: 175.790222 },
+  { lat: -37.75, lng: 145.116667 },
+  { lat: -37.759859, lng: 145.128708 },
+  { lat: -37.765015, lng: 145.133858 },
+  { lat: -37.770104, lng: 145.143299 },
+  { lat: -37.7737, lng: 145.145187 },
+  { lat: -37.774785, lng: 145.137978 },
+  { lat: -37.819616, lng: 144.968119 },
+  { lat: -38.330766, lng: 144.695692 },
+  { lat: -39.927193, lng: 175.053218 },
+  { lat: -41.330162, lng: 174.865694 },
+  { lat: -42.734358, lng: 147.439506 },
+  { lat: -42.734358, lng: 147.501315 },
+  { lat: -42.735258, lng: 147.438 },
+  { lat: -43.999792, lng: 170.463352 }
+];
+
+function createKey(location: any) {
+  return location.lat + location.lng;
 }
+
+export const BaseMap = () => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI"
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={7}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      <GoogleMap
+        id="marker-example"
+        mapContainerStyle={containerStyle}
+        zoom={3}
+        center={center}
+      >
+        <MarkerClusterer>
+          {(clusterer) => (
+            <>
+              {locations.map((location: any) => (
+                <MarkerF
+                  key={createKey(location)}
+                  position={location}
+                  clusterer={clusterer}
+                />
+              ))}
+            </>
+          )}
+        </MarkerClusterer>
+      </GoogleMap>
+    </GoogleMap>
+  ) : null;
+}
+
+export default BaseMap;

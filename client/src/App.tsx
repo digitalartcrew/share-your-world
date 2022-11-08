@@ -1,28 +1,9 @@
-import React, { ReactElement } from "react";
-import './App.css';
-// import { Map } from './components/Map';
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import BaseMap from "./components/Map";
 
-// export enum Status {
-//   LOADING = 'LOADING',
-//   FAILURE = 'FAILURE',
-//   SUCCESS = 'SUCCESS',
-// }
-
-const render = (status: Status) => {
-  return <h1>{status}</h1>;
-};
-
-
-function App() {
-  const center = { lat: 41.8781, lng: 87.6298 };
-  const zoom = 10;
-
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
-  );
+    <BaseMap />
+  )
 }
 
 export default App;
