@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const { OverlayRouter, AuthRouter, MainRouter } = require("./routes");
 const db = require("./db");
+require("dotenv").config();
 
 //Cookie and Session
 const cookieParser = require("cookie-parser");

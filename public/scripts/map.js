@@ -30,20 +30,90 @@ function initMap() {
       // NOTE: starting point for canvas - needs to be an almost transparent layer that a user can draw on.
       const canvas = document.createElement("canvas");
 
-      canvas.style.width = 300;
-      canvas.style.height = 300;
-      canvas.style.position = "absolute";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
 
       const ctx = canvas.getContext("2d");
       ctx.fillStyle = "green";
-      ctx.fillRect(10, 10, 100, 100);
+      ctx.fillRect(0, 0, 1280, 720);
       this.div.appendChild(canvas);
+
+      canvas.addEventListener(
+        "mousemove",
+        function (e) {
+          findxy("move", e);
+        },
+        false
+      );
+      canvas.addEventListener(
+        "mousedown",
+        function (e) {
+          findxy("down", e);
+        },
+        false
+      );
+      canvas.addEventListener(
+        "mouseup",
+        function (e) {
+          findxy("up", e);
+        },
+        false
+      );
+      canvas.addEventListener(
+        "mouseout",
+        function (e) {
+          findxy("out", e);
+        },
+        false
+      );
+
+      function drawStokes() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function findxy(res, e) {
+        if (res == "down") {
+          prevX = currX;
+          prevY = currY;
+          currX = e.clientX - canvas.offsetLeft;
+          currY = e.clientY - canvas.offsetTop;
+
+          flag = true;
+          dot_flag = true;
+          if (dot_flag) {
+            ctx.beginPath();
+            ctx.fillStyle = x;
+            ctx.fillRect(currX, currY, 2, 2);
+            ctx.closePath();
+            dot_flag = false;
+          }
+        }
+        if (res == "up" || res == "out") {
+          flag = false;
+        }
+        if (res == "move") {
+          if (flag) {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+            drawStokes();
+          }
+        }
+      }
 
       // Add the element to the "overlayLayer" pane.
       const panes = this.getPanes();
 
       panes.overlayLayer.appendChild(this.div);
     }
+
     draw() {
       // We use the south-west and north-east
       // coordinates of the overlay to peg it to the correct position and size.
