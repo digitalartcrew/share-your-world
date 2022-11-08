@@ -24,8 +24,6 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// render server side template
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 // parse application/x-www-form-urlencoded
