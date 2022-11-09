@@ -8,9 +8,9 @@ const MainNavbar = () => {
   return (
     <Navbar style={{ backgroundColor: "lightgray" }}>
       <Container>
-        <Navbar.Brand href="#dashboard">Share Your World</Navbar.Brand>
+        <Navbar.Brand href="dashboard">Share Your World</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#dashboard">Dashboard</Nav.Link>
+          <Nav.Link href="dashboard">Dashboard</Nav.Link>
         </Nav>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
@@ -29,9 +29,9 @@ const MainNavbar = () => {
               }
               id="collapsible-nav-dropdown"
             >
-              <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
-              <NavDropdown.Item href="#signout">Sign Out</NavDropdown.Item>
+              <NavDropdown.Item href="profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="settings">Settings</NavDropdown.Item>
+              <NavDropdown.Item href="signout">Sign Out</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
