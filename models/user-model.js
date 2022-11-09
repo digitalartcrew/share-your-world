@@ -1,11 +1,22 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
+import { Overlay } from "./overlay-model";
 
 const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+  },
+  overlays: {
+    type: [Overlay],
   },
   password: {
     type: String,
