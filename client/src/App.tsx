@@ -3,7 +3,7 @@ import { LandingPage } from "./components/pages/landing";
 import { MapViewPage } from "./components/pages/map-view";
 import { CreateOverlayPage } from "./components/pages/create-overlay";
 import { ProfilePage } from "./components/pages/profile";
-import { SettingsPage} from "./components/pages/settings";
+import { SettingsPage } from "./components/pages/settings";
 import { UserDashboardPage } from "./components/pages/user-dashboard";
 import MainNavbar from "./components/Navbar";
 
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="dashboard" element={<UserDashboardPage />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
 export default App;
