@@ -2,8 +2,14 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Button, Image, NavDropdown } from "react-bootstrap";
+import { matchPath, useLocation } from "react-router-dom";
 
 const MainNavbar = () => {
+  const isDashBoardActive = !!matchPath(
+    { path: "/dashboard" },
+    useLocation().pathname
+  );
+  console.log(isDashBoardActive);
   const toggleForm = () => {};
   return (
     <Navbar expand="lg" style={{ backgroundColor: "lightgray" }}>
@@ -33,7 +39,8 @@ const MainNavbar = () => {
         <Navbar.Collapse className="justify-content-end text-center">
           <Nav>
             <Nav.Link href="dashboard">Dashboard</Nav.Link>
-            <Button style={{ marginRight: "1rem" }}>Create Overlay</Button>
+            {!isDashBoardActive ? <Button style={{ marginRight: "1rem" }}>Create Overlay</Button> : null}
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
