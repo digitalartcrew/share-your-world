@@ -3,12 +3,13 @@ import {
   GoogleMap,
   useJsApiLoader,
   MarkerClusterer,
-  MarkerF
+  MarkerF,
+  DrawingManager,
 } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
-  height: "100vh"
+  height: "100vh",
 };
 
 const center = { lat: -28.024, lng: 140.887 };
@@ -36,7 +37,7 @@ const locations = [
   { lat: -42.734358, lng: 147.439506 },
   { lat: -42.734358, lng: 147.501315 },
   { lat: -42.735258, lng: 147.438 },
-  { lat: -43.999792, lng: 170.463352 }
+  { lat: -43.999792, lng: 170.463352 },
 ];
 
 function createKey(location: any) {
@@ -46,7 +47,7 @@ function createKey(location: any) {
 export const BaseMap = () => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI"
+    googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI",
   });
 
   const [map, setMap] = React.useState(null);
@@ -61,34 +62,12 @@ export const BaseMap = () => {
 
   return isLoaded ? (
     <GoogleMap
+      id="marker-example"
       mapContainerStyle={containerStyle}
+      zoom={3}
       center={center}
-      zoom={7}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
-      <GoogleMap
-        id="marker-example"
-        mapContainerStyle={containerStyle}
-        zoom={3}
-        center={center}
-      >
-        <MarkerClusterer>
-          {(clusterer) => (
-            <>
-              {locations.map((location: any) => (
-                <MarkerF
-                  key={createKey(location)}
-                  position={location}
-                  clusterer={clusterer}
-                />
-              ))}
-            </>
-          )}
-        </MarkerClusterer>
-      </GoogleMap>
-    </GoogleMap>
+    ></GoogleMap>
   ) : null;
-}
+};
 
 export default BaseMap;
