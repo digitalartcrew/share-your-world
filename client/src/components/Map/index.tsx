@@ -11,6 +11,7 @@ import {
   Circle,
   Rectangle,
   LoadScript,
+  InfoWindow,
 } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -51,11 +52,18 @@ function createKey(location: any) {
 }
 
 export const BaseMap = () => {
-  const [path, setPath] = useState([
-    { lat: 52.52549080781086, lng: 13.398118538856465 },
-    { lat: 52.48578559055679, lng: 13.36653284549709 },
-    { lat: 52.48871246221608, lng: 13.44618372440334 },
-  ]);
+  // const [path, setPath] = useState([
+  //   { lat: 52.52549080781086, lng: 13.398118538856465 },
+  //   { lat: 52.48578559055679, lng: 13.36653284549709 },
+  //   { lat: 52.48871246221608, lng: 13.44618372440334 },
+  // ]);
+
+  const [bounds, setBounds] = useState({
+    north: 19.137384,
+    south: 18.510866,
+    west: 72.874748,
+    east: 73.879864,
+  });
 
   const [drawingControlEnabled, setDrawingControlEnabled] = useState(true);
   const [marker, setMarker] = useState(null);
@@ -81,12 +89,67 @@ export const BaseMap = () => {
     setMap(null);
   }, []);
 
+  const divStyle = {
+    background: `white`,
+    border: `1px solid #ccc`,
+    padding: 15,
+  };
+
+  const position = { lat: 18.7557, lng: 73.4091 };
+
+  //   function addMarker(location, map, note) {
+  //     // Vyberie prvý voľný index, na ktorý uloží marker aby neprepísal už obsadený
+  //     //
+  //     var marker = new google.maps.Marker({
+  //         position: location,
+  //         label: labels[labelIndex++ % labels.length],
+  //         map: map,
+  //         draggable: true,
+  //         editable: true
+
+  //      });
+
+  //     attachNote(marker, note);
+
+  // }
+
+  // }
+
+  //   google.maps.event.addListener(map, 'click', function(event) {
+  //     var addNote = prompt("What note would you like to add?");
+  //     addMarker(event.latLng, map, poznamka);
+  //     var card = new map.card();
+  //     card.getBody().innerHTML = poznamka;
+
+  // });
+
+  //   function attachNote(marker: any, note: any) {
+  //     var infowindow = new google.maps.InfoWindow({
+  //       content: note,
+  //     });
+
+  //     marker.addListener("click", function () {
+  //       infowindow.open(marker.get("map"), marker);
+  //     });
+  //   }
+
   return isLoaded ? (
     <GoogleMap
       id="marker-example"
       mapContainerStyle={containerStyle}
       zoom={3}
       center={center}
+      options={{
+        restriction: {
+          latLngBounds: {
+            north: 19.137384, // Mumbai
+            south: 18.510866, // Pune
+            west: 72.874748, // Mumbai
+            east: 73.879864, // Pune
+          },
+          strictBounds: false,
+        },
+      }}
     >
       <DrawingManager
         options={{
@@ -102,6 +165,11 @@ export const BaseMap = () => {
           },
         }}
       />
+      <InfoWindow position={position}>
+        <div style={divStyle}>
+          <h1>This is how the notes will look once implemented.</h1>
+        </div>
+      </InfoWindow>
     </GoogleMap>
   ) : null;
 };

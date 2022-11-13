@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Filter from "../Filter";
 import BaseMap from "../Map";
 import MapTile from "../MapTile";
@@ -7,8 +7,18 @@ import { PaginationComponent } from "../PaginationComponent";
 
 export const CreateOverlayPage = () => {
   return (
-    <div className="create-overlay-page">
-      <Container fluid>
+    <div
+      className="create-overlay-page"
+      style={{
+        backgroundColor: "lightgray",
+      }}
+    >
+      <Container
+        style={{
+          marginLeft: "1rem",
+        }}
+        fluid
+      >
         <Row>
           <Col lg="10">
             <Row
@@ -24,7 +34,7 @@ export const CreateOverlayPage = () => {
           <Col
             lg="2"
             style={{
-              backgroundColor: "gray",
+              backgroundColor: "lightgray",
               maxWidth: "100%",
               minHeight: "100vh",
             }}
@@ -45,6 +55,20 @@ export const CreateOverlayPage = () => {
                   <li>Note 3</li>
                 </ul>
               </div>
+              <Button
+                // onClick={
+                //   {
+
+                //     /* create note*/
+                //   }
+                // }
+                style={{
+                  textAlign: "center",
+                  marginTop: "1rem",
+                }}
+              >
+                Add Note
+              </Button>
             </Container>
           </Col>
         </Row>
