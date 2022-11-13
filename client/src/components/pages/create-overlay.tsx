@@ -55,6 +55,15 @@ export const CreateOverlayPage = () => {
                   <li>Note 3</li>
                 </ul>
               </div>
+              <textarea
+                style={{
+                  marginTop: "1rem",
+                }}
+                // value={this.state.textAreaValue}
+                // onChange={this.handleChange}
+                rows={5}
+                cols={20}
+              />
               <Button
                 // onClick={
                 //   {
