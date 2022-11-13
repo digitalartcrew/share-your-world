@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   MarkerClusterer,
   MarkerF,
   DrawingManager,
+  Polygon,
+  Marker,
+  Polyline,
+  Circle,
+  Rectangle,
+  LoadScript,
 } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -12,7 +18,7 @@ const containerStyle = {
   height: "100vh",
 };
 
-const center = { lat: -28.024, lng: 140.887 };
+const center = { lat: 52.52549080781086, lng: 13.398118538856465 };
 
 const locations = [
   { lat: -31.56391, lng: 147.154312 },
@@ -45,9 +51,24 @@ function createKey(location: any) {
 }
 
 export const BaseMap = () => {
+  const [path, setPath] = useState([
+    { lat: 52.52549080781086, lng: 13.398118538856465 },
+    { lat: 52.48578559055679, lng: 13.36653284549709 },
+    { lat: 52.48871246221608, lng: 13.44618372440334 },
+  ]);
+
+  const [drawingControlEnabled, setDrawingControlEnabled] = useState(true);
+  const [marker, setMarker] = useState(null);
+  const [polyline, setPolyline] = useState(null);
+  const [circleRadius, setCircleRadius] = useState(null);
+  const [circleCenter, setCircleCenter] = useState(null);
+  const [rectangle, setRectangle] = useState(null);
+  const [visible, setVisible] = useState(true);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI",
+    libraries: ["drawing"],
   });
 
   const [map, setMap] = React.useState(null);
@@ -66,7 +87,22 @@ export const BaseMap = () => {
       mapContainerStyle={containerStyle}
       zoom={3}
       center={center}
-    ></GoogleMap>
+    >
+      <DrawingManager
+        options={{
+          drawingControl: drawingControlEnabled,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [
+              google.maps.drawing.OverlayType.CIRCLE,
+              google.maps.drawing.OverlayType.POLYGON,
+              google.maps.drawing.OverlayType.POLYLINE,
+              google.maps.drawing.OverlayType.RECTANGLE,
+            ],
+          },
+        }}
+      />
+    </GoogleMap>
   ) : null;
 };
 
