@@ -10,8 +10,9 @@ const MainNavbar = () => {
     { path: "/dashboard" },
     useLocation().pathname
   );
+
   console.log(isDashBoardActive);
-  const [ isLoggedIn, setIsLoggedIn] = useState(false);
+  const [ isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <Navbar expand="lg" style={{ backgroundColor: "lightgray" }}>
       <Container>
@@ -37,12 +38,6 @@ const MainNavbar = () => {
           <NavDropdown.Item href="settings">Settings</NavDropdown.Item>
           <NavDropdown.Item href="signout">Sign Out</NavDropdown.Item>
         </NavDropdown>
-        <Navbar.Collapse className="justify-content-end text-center">
-          <Nav>
-            <Nav.Link href="dashboard">Dashboard</Nav.Link>
-            {!isDashBoardActive ? <Button style={{ marginRight: "1rem" }}>Create Overlay</Button> : null}
-          </Nav>
-        </Navbar.Collapse>
         </>
         : null }
       </Container>

@@ -1,10 +1,14 @@
 import { useEffect, useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Filter() {
   return (
     <Container className="text-center">
+      <Link to="/create">
       <Button style={{ marginTop: "1rem" }}>Create New Overlay</Button>
+      </Link>
+     
       <Form
         style={{
           backgroundColor: "white",
