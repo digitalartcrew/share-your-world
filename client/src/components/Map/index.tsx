@@ -28,7 +28,7 @@ function createKey(location: any) {
   return location.lat + location.lng;
 }
 
-export const BaseMap = () => {
+export const BaseMap = (props: any) => {
   const [overlay, setOverlay] = useState({
     bounds: {
       north: 19.137384,
@@ -55,7 +55,7 @@ export const BaseMap = () => {
   const [drawingControlEnabled, setDrawingControlEnabled] = useState(true);
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [currentNote, setCurrentNote] = useState("");
-  const [noteCreation, setNoteCreation] = useState(false);
+  const [noteCreation, setNoteCreation] = useState(props.creating);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -130,8 +130,8 @@ export const BaseMap = () => {
     // console.log(showingInfoWindow);
   }
 
-  function createNote(newPos: any, note: any) {
-    if (noteCreation) {
+  function createNote(newPos: any) {
+    if (props.creating) {
       setOverlay((overlay) => ({
         ...overlay,
         notes: [
@@ -140,12 +140,10 @@ export const BaseMap = () => {
             id: Math.floor(Math.random() * 89999 + 10000),
             position: newPos,
             showing: false,
-            note: note,
+            note: props.note,
           },
         ],
       }));
-
-      setNoteCreation(false);
     }
   }
 
@@ -176,28 +174,13 @@ export const BaseMap = () => {
         (e) => {
           var lat = e.latLng?.lat();
           var lng = e.latLng?.lng();
-          createNote({ lat, lng }, "created note");
+          createNote({ lat, lng });
         }
 
         // if note creation mode is true, create note with location of cursor + grab value of textarea from parent.
         // create note then set note creation mode to false
       }
     >
-      <Button
-        // onClick={
-        //   {
-
-        //     /* create note*/
-        //   }
-        // }
-        style={{
-          textAlign: "center",
-          marginTop: "1rem",
-          zIndex: 10000000000,
-        }}
-      >
-        Add Note
-      </Button>
       <DrawingManager
         options={{
           drawingControl: drawingControlEnabled,

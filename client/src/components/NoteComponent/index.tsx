@@ -8,7 +8,7 @@ function NoteComponent(props: any) {
         onClick={props.handler}
         icon={{
           scaledSize: new google.maps.Size(30, 37),
-          url: "https://uxwing.com/wp-content/themes/uxwing/download/file-and-folder-type/paper-icon.png",
+          url: "https://cdn-icons-png.flaticon.com/512/5094/5094288.png",
         }}
       />
       {props.showing && (

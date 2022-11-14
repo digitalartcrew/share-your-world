@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Filter from "../Filter";
 import BaseMap from "../Map";
 import MapTile from "../MapTile";
 import { PaginationComponent } from "../PaginationComponent";
 
-export const CreateOverlayPage = () => {
+export const CreateOverlayPage = ({ value = "" }) => {
+  const [textAreaValue, setTextAreaValue] = useState(value);
+  const [noteCreation, setNoteCreation] = useState(false);
+  const [btnValue, setBtnValue] = useState("blue");
+
+  function toggleCreation() {
+    setNoteCreation(!noteCreation);
+  }
+
+  function handleChange(event: any) {
+    setTextAreaValue(event.target.value);
+  }
+
   return (
     <div
       className="create-overlay-page"
@@ -28,7 +40,7 @@ export const CreateOverlayPage = () => {
                 backgroundColor: "lightgray",
               }}
             >
-              <BaseMap />
+              <BaseMap note={textAreaValue} creating={noteCreation} />
             </Row>
           </Col>
           <Col
@@ -55,13 +67,23 @@ export const CreateOverlayPage = () => {
                   <li>Note 3</li>
                 </ul>
               </div>
+              <Button
+                style={{
+                  marginTop: "1rem",
+                  backgroundColor: noteCreation ? "red" : "#0d6efd",
+                  borderColor: noteCreation ? "red" : "#0d6efd",
+                }}
+                onClick={toggleCreation}
+              >
+                {noteCreation ? "Cancel" : "Create Notes"}
+              </Button>
 
               <textarea
                 style={{
                   marginTop: "1rem",
                 }}
-                // value={this.state.textAreaValue}
-                // onChange={this.handleChange}
+                value={textAreaValue}
+                onChange={handleChange}
                 rows={5}
                 cols={20}
               />
