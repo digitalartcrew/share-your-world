@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 
 const OverlaySchema = new Schema({
   title: String,
-  center: Position,
+  location: {
+    type: [Number],
+  },
   zoom: Number,
+  center: Number,
   notes: [Note],
   plots: [Plot],
 });

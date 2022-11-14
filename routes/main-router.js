@@ -3,15 +3,7 @@ const router = express.Router();
 const db = require("./../db");
 
 router.get("/", (req, res) => {
-  res.render("index.ejs");
-});
-
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
-router.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("Google Maps Overlay API");
 });
 
 router.post("/logout", (req, res) => {
