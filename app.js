@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 8080;
 const {
@@ -30,7 +31,7 @@ app.use(passport.session());
 
 // render server side template
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,6 +40,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+app.get("/", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 app.use("/", MainRouter);
 app.use("/api", UserRouter);
