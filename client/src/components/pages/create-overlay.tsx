@@ -89,6 +89,16 @@ export const CreateOverlayPage = ({ value = "" }) => {
               />
               <label>Note content goes above.</label>
             </Container>
+            <Button
+                style={{
+                  marginTop: "1rem",
+                  backgroundColor: noteCreation ? "red" : "#0d6efd",
+                  borderColor: noteCreation ? "red" : "#0d6efd",
+                }}
+                onClick={toggleCreation}
+              >
+               Save Overlay
+              </Button>
           </Col>
         </Row>
         <Row></Row>
