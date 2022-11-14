@@ -51,11 +51,12 @@ const updateOverlay = async (req, res) => {
       });
     }
 
-    Overlay.title = body.title || Overlay.title;
-    Overlay.location = body.location || Overlay.location;
-    Overlay.notes = body.notes || Overlay.notes;
+    overlay.title = body.title || overlay.title;
+    overlay.location = body.location || overlay.location;
+    overlay.notes = body.notes || overlay.notes;
 
-    Overlay.save()
+    overlay
+      .save()
       .then(() => {
         return res.status(200).json({
           success: true,
@@ -80,7 +81,7 @@ const deleteOverlay = async (req, res) => {
 
     if (!overlay) {
       return res
-        .status(4
+        .status(404)
         .json({ success: false, error: `Overlay not found` });
     }
 

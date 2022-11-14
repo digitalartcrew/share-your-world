@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -10,12 +11,12 @@ const MainNavbar = () => {
     useLocation().pathname
   );
   console.log(isDashBoardActive);
-  const toggleForm = () => {};
+  const [ isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <Navbar expand="lg" style={{ backgroundColor: "lightgray" }}>
       <Container>
         <Navbar.Brand href="dashboard">Overlay</Navbar.Brand>
-
+        {isLoggedIn ? <>
         <Nav className="me-auto"></Nav>
         <Navbar.Toggle />
         <NavDropdown
@@ -40,9 +41,10 @@ const MainNavbar = () => {
           <Nav>
             <Nav.Link href="dashboard">Dashboard</Nav.Link>
             {!isDashBoardActive ? <Button style={{ marginRight: "1rem" }}>Create Overlay</Button> : null}
-            
           </Nav>
         </Navbar.Collapse>
+        </>
+        : null }
       </Container>
     </Navbar>
   );

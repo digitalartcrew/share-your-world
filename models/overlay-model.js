@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { Note, Position, Plot } = require(".");
 const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const OverlaySchema = new Schema({
   title: String,
@@ -9,8 +9,9 @@ const OverlaySchema = new Schema({
   },
   zoom: Number,
   center: Number,
-  notes: [Note],
-  plots: [Plot],
+  notes: [{ type: ObjectId, ref: "Note" }],
+  plots: [{ type: ObjectId, ref: "Plot" }],
+  creatorId: { type: ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Overlay", OverlaySchema);

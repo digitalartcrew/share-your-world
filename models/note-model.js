@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const NoteSchema = new Schema({
-  userId: ObjectId,
+  authorId: { type: ObjectId, ref: "User" },
   overlayId: ObjectId,
   locationId: ObjectId,
   text: String,

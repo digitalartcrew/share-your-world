@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { User } = require("./../models");
-const db = require("../db");
 
 passport.use(
   "local-signup",
