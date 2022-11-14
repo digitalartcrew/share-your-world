@@ -7,16 +7,16 @@ function NoteComponent(props: any) {
         position={props.pos}
         onClick={props.handler}
         icon={{
-          scaledSize: new google.maps.Size(37, 37),
-          url: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Trollface_non-free.png/220px-Trollface_non-free.png",
+          scaledSize: new google.maps.Size(30, 37),
+          url: "https://uxwing.com/wp-content/themes/uxwing/download/file-and-folder-type/paper-icon.png",
         }}
       />
       {props.showing && (
         <InfoWindow onCloseClick={props.handler} position={props.pos}>
           <div
             style={{
-              width: "150px",
-              height: "150px",
+              width: "100px",
+              height: "100px",
             }}
           >
             <h6>{props.note}</h6>

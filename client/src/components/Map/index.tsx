@@ -14,6 +14,8 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import NoteComponent from "../NoteComponent";
+import { Button } from "react-bootstrap";
+import e from "express";
 
 const containerStyle = {
   width: "100%",
@@ -34,12 +36,26 @@ export const BaseMap = () => {
       west: 72.874748,
       east: 73.879864,
     },
-    notes: [],
+    notes: [
+      {
+        id: 0,
+        position: { lat: 18.7557, lng: 73.4091 },
+        showing: false,
+        note: "Turn right and go into the big pink building here.",
+      },
+      {
+        id: 1,
+        position: { lat: 19.076, lng: 72.8777 },
+        showing: false,
+        note: "Turn left and go into the small blue tower here.",
+      },
+    ],
   });
 
   const [drawingControlEnabled, setDrawingControlEnabled] = useState(true);
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [currentNote, setCurrentNote] = useState("");
+  const [noteCreation, setNoteCreation] = useState(false);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -97,21 +113,52 @@ export const BaseMap = () => {
 
   // });
 
-  function handleMarkerTap() {
-    setShowingInfoWindow(!showingInfoWindow);
-    console.log(showingInfoWindow);
+  function handleMarkerTap(note: any) {
+    // change note.showing value to t/f
+    console.log(note);
+    setOverlay((overlay) => ({
+      ...overlay,
+      notes: [
+        ...overlay.notes,
+        {
+          ...note,
+          showing: !note.showing,
+        },
+      ],
+    }));
+    console.log(note);
+    // console.log(showingInfoWindow);
   }
 
-  function createNote(pos: google.maps.LatLng) {
-    var note: any = (
-      <NoteComponent
-        pos={pos}
-        handler={() => handleMarkerTap}
-        showing={showingInfoWindow}
-        note={currentNote}
-      ></NoteComponent>
-    );
+  function createNote(newPos: any, note: any) {
+    if (noteCreation) {
+      setOverlay((overlay) => ({
+        ...overlay,
+        notes: [
+          ...overlay.notes,
+          {
+            id: Math.floor(Math.random() * 89999 + 10000),
+            position: newPos,
+            showing: false,
+            note: note,
+          },
+        ],
+      }));
+
+      setNoteCreation(false);
+    }
   }
+
+  // function createNote(pos: google.maps.LatLng) {
+  //   var note: any = (
+  //     <NoteComponent
+  //       pos={pos}
+  //       handler={() => handleMarkerTap}
+  //       showing={showingInfoWindow}
+  //       note={currentNote}
+  //     ></NoteComponent>
+  //   );
+  // }
 
   return isLoaded ? (
     <GoogleMap
@@ -125,7 +172,32 @@ export const BaseMap = () => {
           strictBounds: false,
         },
       }}
+      onClick={
+        (e) => {
+          var lat = e.latLng?.lat();
+          var lng = e.latLng?.lng();
+          createNote({ lat, lng }, "created note");
+        }
+
+        // if note creation mode is true, create note with location of cursor + grab value of textarea from parent.
+        // create note then set note creation mode to false
+      }
     >
+      <Button
+        // onClick={
+        //   {
+
+        //     /* create note*/
+        //   }
+        // }
+        style={{
+          textAlign: "center",
+          marginTop: "1rem",
+          zIndex: 10000000000,
+        }}
+      >
+        Add Note
+      </Button>
       <DrawingManager
         options={{
           drawingControl: drawingControlEnabled,
@@ -140,21 +212,17 @@ export const BaseMap = () => {
           },
         }}
       />
-      {/* <Marker position={position} onClick={() => handleMarkerTap()} />
-      {showingInfoWindow && (
-        <InfoWindow position={position} onCloseClick={() => handleMarkerTap()}>
-          <div
-            style={{
-              width: "150px",
-              height: "150px",
-            }}
-          >
-            <h6>This is how the notes will look once implemented.</h6>
-          </div>
-        </InfoWindow>
-      )} */}
+
       {overlay.notes.length !== 0 &&
-        overlay.notes.map((note, i) => <NoteComponent key={i} />)}
+        overlay.notes.map((note, i) => (
+          <NoteComponent
+            key={i}
+            pos={note.position}
+            handler={() => handleMarkerTap(note)}
+            showing={note.showing}
+            note={note.note}
+          />
+        ))}
     </GoogleMap>
   ) : null;
 };

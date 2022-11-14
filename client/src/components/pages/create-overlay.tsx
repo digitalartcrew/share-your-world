@@ -55,6 +55,7 @@ export const CreateOverlayPage = () => {
                   <li>Note 3</li>
                 </ul>
               </div>
+
               <textarea
                 style={{
                   marginTop: "1rem",
@@ -64,20 +65,7 @@ export const CreateOverlayPage = () => {
                 rows={5}
                 cols={20}
               />
-              <Button
-                // onClick={
-                //   {
-
-                //     /* create note*/
-                //   }
-                // }
-                style={{
-                  textAlign: "center",
-                  marginTop: "1rem",
-                }}
-              >
-                Add Note
-              </Button>
+              <label>Note content goes above.</label>
             </Container>
           </Col>
         </Row>
