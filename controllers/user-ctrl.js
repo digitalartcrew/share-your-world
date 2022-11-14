@@ -10,7 +10,7 @@ const updateUser = async (req, res) => {
     });
   }
 
-  User.findOne({ _id: req.params.id }, (err, User) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
       return res.status(404).json({
         err,
@@ -27,7 +27,7 @@ const updateUser = async (req, res) => {
       .then(() => {
         return res.status(200).json({
           success: true,
-          id: User._id,
+          id: user._id,
           message: "User updated!",
         });
       })
@@ -55,21 +55,25 @@ const deleteUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  await User.findOne({ _id: req.params.id }, (err, user) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-
+  try {
+    const user = await User.findOne({ _id: req.params.id });
     return res.status(200).json({ success: true, data: user });
-  }).catch((err) => console.log(err));
+  } catch (error) {
+    if (error) {
+      return res.status(400).json({ success: false, error });
+    }
+  }
 };
 
 const getUsers = async (req, res) => {
   await User.find({}, (err, users) => {
     if (err) {
-      return res.status(400).json({ success: false, error: err });
+      return res.status(400).json({ success: false, err });
     }
-    if (!Users.length) {
+
+    console.log("MY USERS: ", users);
+
+    if (!users.length) {
       return res.status(404).json({ success: false, error: `User not found` });
     }
     return res.status(200).json({ success: true, data: users });

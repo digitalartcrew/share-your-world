@@ -6,10 +6,11 @@ const ObjectId = Schema.ObjectId;
 const UserSchema = new Schema({
   username: {
     type: String,
+    unique: true,
   },
   email: {
     type: String,
-    required: true,
+    unique: true,
   },
   phone: {
     type: Number,

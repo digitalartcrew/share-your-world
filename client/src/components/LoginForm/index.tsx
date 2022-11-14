@@ -2,12 +2,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 interface FormProps {
-  onSubmit: any
+  onLogIn: any
 }
 
-const LoginForm: React.FC<FormProps>= ({ onSubmit }) => {
+const LoginForm: React.FC<FormProps>= ({ onLogIn }) => {
   return (
-    <Form style={{ marginTop: "20px" }} onSubmit={onSubmit}>
+    <Form style={{ marginTop: "20px" }} onSubmit={onLogIn}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email" />

@@ -27,15 +27,25 @@ export const LandingPage = () => {
     setIsReadyToLogin(!isReadyToLogin);
   }
 
-  const signUp = (signUpData: SignUpData) => {
-    const {username, email, phone, password, rpassword} = signUpData;
+  const signUp = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
 
-    if(password !== rpassword){
+    const formElements = form.elements as typeof form.elements & {
+      username: {value: string},
+      email: {value: string},
+      password: {value: string},
+      rpassword: {value: string}
+    }
+
+    debugger;
+    
+    if (formElements.password.value !== formElements.rpassword.value) {
       return
     }
 
     debugger;
-    axios.post('/api/signup', { username, email, phone, password }).then(function (response) {
+    axios.post('/auth/signup', { username: formElements.username.value, password: formElements.password.value }).then(function (response) {
       console.log(response);
       navigate("/dashboard");
     })
@@ -44,10 +54,22 @@ export const LandingPage = () => {
     });
   }
 
-  const loginIn = (loginData: LoginData) => {
-    const {username, email, phone, password, rpassword} = loginData;
+  const logIn = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
 
-    axios.post('/api/signup', { username, email, phone, password }).then(function (response) {
+    const formElements = form.elements as typeof form.elements & {
+      username: {value: string},
+      email: {value: string},
+      password: {value: string},
+      rpassword: {value: string}
+    }
+
+    if (formElements.password.value !== formElements.rpassword.value) {
+      return
+    }
+
+    axios.post('/auth/login', { username: formElements.username.value, password: formElements.password.value }).then(function (response) {
       console.log(response);
       navigate("/dashboard");
     })
@@ -71,7 +93,7 @@ export const LandingPage = () => {
         </Col>
         <Col>
           <Container>
-            {isReadyToLogin ? <LoginForm onSubmit={loginIn} /> : <SignUpForm onSubmit={signUp} />}
+            {isReadyToLogin ? <LoginForm onLogIn={logIn} /> : <SignUpForm onSignUp={signUp} />}
             {isReadyToLogin ?<p>Need to create an account? Click <Button className="" onClick={toggleForm}>Sign Up Now</Button></p> : <p>Already have an account? Click here to <Button className="" onClick={toggleForm}>Log in</Button></p>}
           </Container>
         </Col>
