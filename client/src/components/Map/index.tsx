@@ -1,52 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   MarkerClusterer,
-  MarkerF
+  MarkerF,
+  DrawingManager,
+  Polygon,
+  Marker,
+  Polyline,
+  Circle,
+  Rectangle,
+  LoadScript,
+  InfoWindow,
 } from "@react-google-maps/api";
+import NoteComponent from "../NoteComponent";
+import { Button } from "react-bootstrap";
+import e from "express";
 
 const containerStyle = {
   width: "100%",
-  height: "100vh"
+  height: "100vh",
 };
 
-const center = { lat: -28.024, lng: 140.887 };
-
-const locations = [
-  { lat: -31.56391, lng: 147.154312 },
-  { lat: -33.718234, lng: 150.363181 },
-  { lat: -33.727111, lng: 150.371124 },
-  { lat: -33.848588, lng: 151.209834 },
-  { lat: -33.851702, lng: 151.216968 },
-  { lat: -34.671264, lng: 150.863657 },
-  { lat: -35.304724, lng: 148.662905 },
-  { lat: -36.817685, lng: 175.699196 },
-  { lat: -36.828611, lng: 175.790222 },
-  { lat: -37.75, lng: 145.116667 },
-  { lat: -37.759859, lng: 145.128708 },
-  { lat: -37.765015, lng: 145.133858 },
-  { lat: -37.770104, lng: 145.143299 },
-  { lat: -37.7737, lng: 145.145187 },
-  { lat: -37.774785, lng: 145.137978 },
-  { lat: -37.819616, lng: 144.968119 },
-  { lat: -38.330766, lng: 144.695692 },
-  { lat: -39.927193, lng: 175.053218 },
-  { lat: -41.330162, lng: 174.865694 },
-  { lat: -42.734358, lng: 147.439506 },
-  { lat: -42.734358, lng: 147.501315 },
-  { lat: -42.735258, lng: 147.438 },
-  { lat: -43.999792, lng: 170.463352 }
-];
+const center = { lat: 52.52549080781086, lng: 13.398118538856465 };
 
 function createKey(location: any) {
   return location.lat + location.lng;
 }
 
-export const BaseMap = () => {
+export const BaseMap = (props: any) => {
+  const [overlay, setOverlay] = useState({
+    bounds: {
+      north: 19.137384,
+      south: 18.510866,
+      west: 72.874748,
+      east: 73.879864,
+    },
+    notes: [
+      {
+        id: 0,
+        position: { lat: 18.7557, lng: 73.4091 },
+        showing: false,
+        note: "Turn right and go into the big pink building here.",
+      },
+      {
+        id: 1,
+        position: { lat: 19.076, lng: 72.8777 },
+        showing: false,
+        note: "Turn left and go into the small blue tower here.",
+      },
+    ],
+  });
+
+  const [drawingControlEnabled, setDrawingControlEnabled] = useState(true);
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [currentNote, setCurrentNote] = useState("");
+  const [noteCreation, setNoteCreation] = useState(props.creating);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI"
+    googleMapsApiKey: "AIzaSyDtyLPypOCu_c4y_SNfCXGTlM7TnF6X2bI",
+    libraries: ["drawing"],
   });
 
   const [map, setMap] = React.useState(null);
@@ -59,36 +73,141 @@ export const BaseMap = () => {
     setMap(null);
   }, []);
 
+  const divStyle = {
+    background: `white`,
+    border: `1px solid #ccc`,
+    padding: 15,
+  };
+
+  const position = { lat: 18.7557, lng: 73.4091 };
+
+  const _marker = {
+    position: {
+      ...position,
+    },
+    showInfo: true,
+  };
+
+  //    addMarker(location, map, note) {
+  //     //
+  //     var marker = new google.maps.Marker({
+  //         position: location,
+  //         label: labels[labelIndex++ % labels.length],
+  //         map: map,
+  //         draggable: true,
+  //         editable: true
+
+  //      });
+
+  //     attachNote(marker, note);
+
+  // }
+
+  // }
+
+  //   google.maps.event.addListener(map, 'click', function(event) {
+  //     var addNote = prompt("What note would you like to add?");
+  //     addMarker(event.latLng, map, poznamka);
+  //     var card = new map.card();
+  //     card.getBody().innerHTML = poznamka;
+
+  // });
+
+  function handleMarkerTap(note: any) {
+    // change note.showing value to t/f
+    console.log(note);
+    setOverlay((overlay) => ({
+      ...overlay,
+      notes: [
+        ...overlay.notes,
+        {
+          ...note,
+          showing: !note.showing,
+        },
+      ],
+    }));
+    console.log(note);
+    // console.log(showingInfoWindow);
+  }
+
+  function createNote(newPos: any) {
+    if (props.creating) {
+      setOverlay((overlay) => ({
+        ...overlay,
+        notes: [
+          ...overlay.notes,
+          {
+            id: Math.floor(Math.random() * 89999 + 10000),
+            position: newPos,
+            showing: false,
+            note: props.note,
+          },
+        ],
+      }));
+    }
+  }
+
+  // function createNote(pos: google.maps.LatLng) {
+  //   var note: any = (
+  //     <NoteComponent
+  //       pos={pos}
+  //       handler={() => handleMarkerTap}
+  //       showing={showingInfoWindow}
+  //       note={currentNote}
+  //     ></NoteComponent>
+  //   );
+  // }
+
   return isLoaded ? (
     <GoogleMap
+      id="marker-example"
       mapContainerStyle={containerStyle}
+      zoom={3}
       center={center}
-      zoom={7}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
+      options={{
+        restriction: {
+          latLngBounds: overlay.bounds,
+          strictBounds: false,
+        },
+      }}
+      onClick={
+        (e) => {
+          var lat = e.latLng?.lat();
+          var lng = e.latLng?.lng();
+          createNote({ lat, lng });
+        }
+
+        // if note creation mode is true, create note with location of cursor + grab value of textarea from parent.
+        // create note then set note creation mode to false
+      }
     >
-      <GoogleMap
-        id="marker-example"
-        mapContainerStyle={containerStyle}
-        zoom={3}
-        center={center}
-      >
-        <MarkerClusterer>
-          {(clusterer) => (
-            <>
-              {locations.map((location: any) => (
-                <MarkerF
-                  key={createKey(location)}
-                  position={location}
-                  clusterer={clusterer}
-                />
-              ))}
-            </>
-          )}
-        </MarkerClusterer>
-      </GoogleMap>
+      <DrawingManager
+        options={{
+          drawingControl: drawingControlEnabled,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [
+              google.maps.drawing.OverlayType.CIRCLE,
+              google.maps.drawing.OverlayType.POLYGON,
+              google.maps.drawing.OverlayType.POLYLINE,
+              google.maps.drawing.OverlayType.RECTANGLE,
+            ],
+          },
+        }}
+      />
+
+      {overlay.notes.length !== 0 &&
+        overlay.notes.map((note, i) => (
+          <NoteComponent
+            key={i}
+            pos={note.position}
+            handler={() => handleMarkerTap(note)}
+            showing={note.showing}
+            note={note.note}
+          />
+        ))}
     </GoogleMap>
   ) : null;
-}
+};
 
 export default BaseMap;
