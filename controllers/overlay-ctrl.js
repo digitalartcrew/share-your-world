@@ -80,7 +80,7 @@ const deleteOverlay = async (req, res) => {
 
     if (!overlay) {
       return res
-        .status(4
+        .status(404)
         .json({ success: false, error: `Overlay not found` });
     }
 

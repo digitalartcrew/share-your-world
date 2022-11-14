@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+mongoose.set("debug", true);
 require("dotenv").config();
 
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect("mongodb://localhost/map-overlays" || process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { User } = require("./../models");
-const db = require("../db");
 
 passport.use(
   "local-signup",
@@ -15,6 +14,7 @@ passport.use(
     async (username, password, done) => {
       try {
         // check if user exists
+        console.log("What's Gucci!");
         const userExists = await User.findOne({ username: username });
         if (userExists) {
           return done(null, false);

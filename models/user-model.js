@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
-import { Overlay } from "./overlay-model";
+const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema({
   username: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -15,9 +14,7 @@ const UserSchema = new Schema({
   phone: {
     type: Number,
   },
-  overlays: {
-    type: [Overlay],
-  },
+  overlays: [{ type: ObjectId, ref: "Overlay" }],
   password: {
     type: String,
     required: true,
