@@ -20,14 +20,38 @@ export const UserDashboardPage = () => {
       <Row>
         <Col lg="10">
           <Row style={{ marginTop: "1rem", marginLeft: "1rem" }}>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
-            <MapTile></MapTile>
+            <MapTile town={"Puck's Alley"} city={"Honolulu, HI"} zip={96822} />
+            <MapTile town={"Waikiki"} city={"Honolulu, HI"} zip={96822} />
+            <MapTile
+              town={"Spots at Walls"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
+            <MapTile
+              town={"Best Eats in Waikiki"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
+            <MapTile
+              town={"Top Stores in Honolulu"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
+            <MapTile
+              town={"Restaurants with Amazing Views"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
+            <MapTile
+              town={"Top Skate Spots near Moilili"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
+            <MapTile
+              town={"Best Fishing Spots on the Ala Wai"}
+              city={"Honolulu, HI"}
+              zip={96822}
+            />
           </Row>
         </Col>
         <Col

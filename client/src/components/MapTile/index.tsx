@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-function MapTile() {
+function MapTile(props: any) {
   return (
     <Card
       style={{
@@ -18,11 +18,11 @@ function MapTile() {
       />
 
       <Card.Text style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>
-        Waikiki
+        {props.town}
         <br />
-        Honolulu, HI
+        {props.city}
         <br />
-        12345
+        {props.zip}
       </Card.Text>
     </Card>
   );

@@ -19,7 +19,7 @@ function NoteComponent(props: any) {
               height: "100px",
             }}
           >
-            <h6>{props.note}</h6>
+            <p>{props.note}</p>
           </div>
         </InfoWindow>
       )}

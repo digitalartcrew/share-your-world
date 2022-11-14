@@ -23,11 +23,7 @@ const containerStyle = {
   height: "100vh",
 };
 
-function createKey(location: any) {
-  return location.lat + location.lng;
-}
-
-export const BaseMap = (props: any) => {
+export const ViewMap = (props: any) => {
   const [libraries]: any = useState(["places", "drawing"]);
   let editableMap: any = useRef(null);
   let autolat: any;
@@ -42,16 +38,40 @@ export const BaseMap = (props: any) => {
     },
     notes: [
       {
-        id: 0,
-        position: { lat: 18.7557, lng: 73.4091 },
+        id: 55319,
+        position: {
+          lat: 21.28461141883548,
+          lng: -157.82807219451922,
+        },
         showing: false,
-        note: "Turn right and go into the big pink building here.",
+        note: "This area right here has the MOST crabs. Every time I go there, I catch at LEAST 5 of them.",
       },
       {
-        id: 1,
-        position: { lat: 19.076, lng: 72.8777 },
+        id: 56135,
+        position: {
+          lat: 21.283536736461976,
+          lng: -157.8263233942415,
+        },
         showing: false,
-        note: "Turn left and go into the small blue tower here.",
+        note: "I like to take my dog Leo over here when my son and I go fishing. ",
+      },
+      {
+        id: 46758,
+        position: {
+          lat: 21.285407956824425,
+          lng: -157.8293478103817,
+        },
+        showing: false,
+        note: "You need a boat to get out here, but this strip is where all the big fish hang out. Easiest catch ever.",
+      },
+      {
+        id: 40334,
+        position: {
+          lat: 21.285877330632264,
+          lng: -157.82875252131487,
+        },
+        showing: false,
+        note: "Worms are in some of the  gardens over here, in case you forget bait.",
       },
     ],
   });
@@ -138,7 +158,6 @@ export const BaseMap = (props: any) => {
         var lat = e.latLng?.lat();
         var lng = e.latLng?.lng();
         createNote({ lat, lng });
-        console.log(overlay.notes);
       }}
     >
       <Autocomplete onLoad={onLoaded} onPlaceChanged={onPlaceChanged}>
@@ -192,4 +211,4 @@ export const BaseMap = (props: any) => {
   ) : null;
 };
 
-export default BaseMap;
+export default ViewMap;
