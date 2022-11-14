@@ -15,7 +15,6 @@ import {
 } from "@react-google-maps/api";
 import NoteComponent from "../NoteComponent";
 import { Button } from "react-bootstrap";
-import e from "express";
 
 const containerStyle = {
   width: "100%",
@@ -116,7 +115,7 @@ export const BaseMap = (props: any) => {
   function handleMarkerTap(note: any) {
     // change note.showing value to t/f
     console.log(note);
-    setOverlay((overlay) => ({
+    setOverlay({
       ...overlay,
       notes: [
         ...overlay.notes,
@@ -125,12 +124,15 @@ export const BaseMap = (props: any) => {
           showing: !note.showing,
         },
       ],
-    }));
+    });
     console.log(note);
     // console.log(showingInfoWindow);
   }
 
   function createNote(newPos: any) {
+    debugger;
+
+
     if (props.creating) {
       setOverlay((overlay) => ({
         ...overlay,

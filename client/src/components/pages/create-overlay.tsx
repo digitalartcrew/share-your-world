@@ -53,7 +53,7 @@ export const CreateOverlayPage = ({ value = "" }) => {
           >
             {/* turn into own component eventually */}
             <Container>
-              <div
+              {/* <div
                 style={{
                   backgroundColor: "white",
                   padding: "1rem",
@@ -66,7 +66,7 @@ export const CreateOverlayPage = ({ value = "" }) => {
                   <li>Note 2</li>
                   <li>Note 3</li>
                 </ul>
-              </div>
+              </div> */}
               <Button
                 style={{
                   marginTop: "1rem",
