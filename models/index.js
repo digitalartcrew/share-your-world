@@ -8,8 +8,8 @@ const Tool = require("./tool-model");
 module.exports = {
   Overlay,
   User,
-  // Note,
-  // Position,
-  // Plot,
-  // Tool,
+  Note,
+  Position,
+  Plot,
+  Tool,
 };
