@@ -38,13 +38,10 @@ export const LandingPage = () => {
       rpassword: {value: string}
     }
 
-    debugger;
-    
     if (formElements.password.value !== formElements.rpassword.value) {
       return
     }
 
-    debugger;
     axios.post('/auth/signup', { username: formElements.username.value, password: formElements.password.value }).then(function (response) {
       console.log(response);
       navigate("/dashboard");
@@ -63,10 +60,6 @@ export const LandingPage = () => {
       email: {value: string},
       password: {value: string},
       rpassword: {value: string}
-    }
-
-    if (formElements.password.value !== formElements.rpassword.value) {
-      return
     }
 
     axios.post('/auth/login', { username: formElements.username.value, password: formElements.password.value }).then(function (response) {
