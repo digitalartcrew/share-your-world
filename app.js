@@ -41,14 +41,14 @@ app.use(bodyParser.json());
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.get("/", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
-
 app.use("/", MainRouter);
 app.use("/api", UserRouter);
 app.use("/api", OverlayRouter);
 app.use("/auth", AuthRouter);
+
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on PORT: ${PORT}`);
