@@ -60,8 +60,8 @@ export const BaseMap = (props: any) => {
   const [currentNote, setCurrentNote] = useState("");
   const [noteCreation, setNoteCreation] = useState(props.creating);
   const [center, setCenter] = useState({
-    lat: 52.52549080781086,
-    lng: 13.398118538856465,
+    lat: 44.52549080781086,
+    lng: -101.398118538856465,
   });
 
   const [autocomplete, setAutocomplete] =
@@ -121,7 +121,8 @@ export const BaseMap = (props: any) => {
 
       console.log(autolong);
 
-      console.log(editableMap.current);
+      setCenter({ lat: autolat, lng: autolong });
+      console.log(center);
     } else {
       console.log("Autocomplete is not loaded yet!");
     }
@@ -132,7 +133,7 @@ export const BaseMap = (props: any) => {
       ref={editableMap}
       id="editmap"
       mapContainerStyle={containerStyle}
-      zoom={3}
+      zoom={14}
       center={center}
       onClick={(e) => {
         var lat = e.latLng?.lat();
